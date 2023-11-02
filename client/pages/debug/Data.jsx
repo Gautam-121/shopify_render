@@ -64,11 +64,11 @@ const GetData = () => {
   console.log(serverKey)
   useEffect(() => {
     if (serverKey === "") {
+      setIsLoaderVisible(true)
       fetchContentPost();
       fetchSegment();
       fetchServerKey();
       fetchProduct();
-      setIsLoaderVisible(true)
     }
     else if (serverKey.length === 152) {
       navigate("/templates")
