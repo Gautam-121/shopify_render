@@ -68,7 +68,7 @@ export default function LandingPage() {
     navigate("/templates");
   };
 
-  useEffect(() => {
+  useEffect(() => { // first time call upto not getting server key from backend
     if (serverKey.length == 0) {
       fetchServerKey();
       setServerKey(responseServerKey);

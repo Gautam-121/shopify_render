@@ -97,11 +97,12 @@ const GetData = () => {
 setServerKey(responseServerKey)
   },[responseServerKey])
   useEffect(()=>{
-    console.log("get Data:", responseServerKey)
+    console.log("get Data:", responseServerKey, serverKey)
     console.log(`https://${appOrigin}`)
     console.log("hi from getData line 87")
-if(responseServerKey.length===152)
+if(responseServerKey.length===152||serverKey.length==152)
 navigate("/createnotification")
+
   },[])
   return (
     <>
