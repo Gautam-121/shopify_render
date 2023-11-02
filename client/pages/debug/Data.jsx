@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import LandingPage from "../LandingPage";
 import { useRecoilState } from "recoil";
-import { segmentsDataAtom, serverKeyAtom } from "../../recoilStore/store";
+import { segmentsDataAtom, serverKeyAtom, dataFromApiAtom } from "../../recoilStore/store";
 import CircularProgress from '@mui/material/CircularProgress';
 
 
 const useDataFetcher = (initialState, url, options) => {
   const [data, setData] = useState(initialState);
   const [segmentsData, setSegmentsData] = useRecoilState(segmentsDataAtom);
+  const [productsData, setProductsData] = useRecoilState(dataFromApiAtom)
   const fetch = useFetch();
 
   const fetchData = async () => {
@@ -25,7 +26,9 @@ const useDataFetcher = (initialState, url, options) => {
       setSegmentsData(dataFromApi);
     }
     else if('products' in result){
-      
+      setData(result.products);
+      let dataFromApi = result.products;
+      setProductsData(dataFromApi)
     }
   };
 
@@ -57,11 +60,22 @@ const GetData = () => {
     },
     method: "GET",
   };
-
+  const getProduct = {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  };
   const [responseSegment, fetchSegment] = useDataFetcher(
     "",
     "/api/getSegment",
     getSegment
+  );
+  const [responseProducts, fetchProducts] = useDataFetcher(
+    "",
+    "/api/getProduct",
+    getProduct
   );
   const [responseDataPost, fetchContentPost] = useDataFetcher(
     "",
@@ -77,6 +91,7 @@ const GetData = () => {
     fetchContentPost();
     fetchSegment();
     fetchServerKey();
+    fetchProducts();
   }, []);
   useEffect(()=>{
 setServerKey(responseServerKey)
@@ -85,7 +100,7 @@ setServerKey(responseServerKey)
     console.log("get Data:", responseServerKey)
     console.log(`https://${appOrigin}`)
     console.log("hi from getData line 87")
-if(serverKey.length===152)
+if(responseServerKey.length===152)
 navigate("/createnotification")
   },[])
   return (
@@ -97,17 +112,5 @@ navigate("/createnotification")
     </>
   );
 };
-
-// const DataCard = ({ method, url, data }) => (
-//   <>
-//     <Layout.Section>
-//       <LegacyCard sectioned>
-//         <p>
-//           {method} <code>{url}</code>: {data}
-//         </p>
-//       </LegacyCard>
-//     </Layout.Section>
-//   </>
-// );
 
 export default GetData;
