@@ -6,10 +6,9 @@ import { Redirect } from "@shopify/app-bridge/actions";
 function useFetch() {
   const app = useAppBridge();
   const fetchFunction = authenticatedFetch(app);
-  console.log("UseFetch From ")
+
   return async (uri, options) => {
-    console.log("useFetch running")
-    console.log(`https://${appOrigin}/apps${uri}`)
+
 
     const response = await fetchFunction(
       uri.startsWith("/")
@@ -19,7 +18,7 @@ function useFetch() {
     );
     if (
       response.headers.get("X-Shopify-API-Request-Failure-Reauthorize") === "1"
-           
+
 
     ) {
       console.log("hii response")
@@ -32,7 +31,7 @@ function useFetch() {
       return null;
     }
 
-     console.log(response)
+    console.log(response)
     return response;
   };
 }
