@@ -58,6 +58,7 @@
     "recoil": "^0.7.7",
     "sequelize": "^6.33.0",
     "serve-static": "^1.15.0"
+    "cookie-parser": "^1.4.6",
   },
   "devDependencies": {
     "@shopify/cli-kit": "^3.49.4",
