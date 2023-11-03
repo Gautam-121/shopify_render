@@ -67,6 +67,8 @@ export const updateServerKey = async (req, res) => {
       })
     }
 
+    res.cookie('serverKeyPresent', true );
+
     return res.status(200).json({
       success: true,
       message: "ServerKey set Succeessufull"
